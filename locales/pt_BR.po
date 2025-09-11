@@ -1,0 +1,150 @@
+# GLPI Plugin ServiceFeedback
+# Portuguese (Brazil) Translation
+
+msgid ""
+msgstr ""
+"Project-Id-Version: ServiceFeedback 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"PO-Revision-Date: 2024-01-01 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: Portuguese (Brazil)\n"
+"Language: pt_BR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Service Feedback"
+msgstr "Avaliação de Serviço"
+
+msgid "Feedback"
+msgstr "Avaliação"
+
+msgid "Feedbacks"
+msgstr "Avaliações"
+
+msgid "Configuration"
+msgstr "Configuração"
+
+msgid "Reports"
+msgstr "Relatórios"
+
+msgid "Email Configuration"
+msgstr "Configuração de Email"
+
+msgid "Enable Feedback"
+msgstr "Habilitar Avaliação"
+
+msgid "Email Subject"
+msgstr "Assunto do Email"
+
+msgid "Email Body"
+msgstr "Corpo do Email"
+
+msgid "Available variables: {ticket_id}, {requester_name}"
+msgstr "Variáveis disponíveis: {ticket_id}, {requester_name}"
+
+msgid "Available variables: {ticket_id}, {requester_name}, {rating_stars}"
+msgstr "Variáveis disponíveis: {ticket_id}, {requester_name}, {rating_stars}"
+
+msgid "User"
+msgstr "Usuário"
+
+msgid "Rating"
+msgstr "Avaliação"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Date creation"
+msgstr "Data de criação"
+
+msgid "Date completion"
+msgstr "Data de conclusão"
+
+msgid "No feedback found"
+msgstr "Nenhuma avaliação encontrada"
+
+msgid "Pending"
+msgstr "Pendente"
+
+msgid "Completed"
+msgstr "Concluído"
+
+msgid "General Statistics"
+msgstr "Estatísticas Gerais"
+
+msgid "Total Feedbacks"
+msgstr "Total de Avaliações"
+
+msgid "Response Rate"
+msgstr "Taxa de Resposta"
+
+msgid "Average Rating"
+msgstr "Avaliação Média"
+
+msgid "Report by Technician"
+msgstr "Relatório por Técnico"
+
+msgid "Report by Group"
+msgstr "Relatório por Grupo"
+
+msgid "Report by Category"
+msgstr "Relatório por Categoria"
+
+msgid "Technician"
+msgstr "Técnico"
+
+msgid "Total Feedbacks"
+msgstr "Total de Avaliações"
+
+msgid "Group"
+msgstr "Grupo"
+
+msgid "Category"
+msgstr "Categoria"
+
+msgid "Filters"
+msgstr "Filtros"
+
+msgid "Start date"
+msgstr "Data inicial"
+
+msgid "End date"
+msgstr "Data final"
+
+msgid "Entity"
+msgstr "Entidade"
+
+msgid "Apply"
+msgstr "Aplicar"
+
+msgid "Invalid parameters"
+msgstr "Parâmetros inválidos"
+
+msgid "Thank you for your feedback!"
+msgstr "Obrigado pela sua avaliação!"
+
+msgid "Your rating has been recorded successfully."
+msgstr "Sua avaliação foi registrada com sucesso."
+
+msgid "Your rating:"
+msgstr "Sua avaliação:"
+
+msgid "Error processing feedback"
+msgstr "Erro ao processar avaliação"
+
+msgid "This feedback link may have already been used or is invalid."
+msgstr "Este link de avaliação pode já ter sido usado ou é inválido."
+
+msgid "You can now close this window."
+msgstr "Você pode fechar esta janela agora."
+
+msgid "Configuration updated successfully"
+msgstr "Configuração atualizada com sucesso"
+
+msgid "Service Feedback Reports"
+msgstr "Relatórios de Avaliação de Serviço"
+
+msgid "Service Feedback Configuration"
+msgstr "Configuração de Avaliação de Serviço"

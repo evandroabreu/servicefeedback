@@ -1,0 +1,147 @@
+# GLPI Plugin ServiceFeedback
+# English (US) Translation
+
+msgid ""
+msgstr ""
+"Project-Id-Version: ServiceFeedback 1.0.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2024-01-01 12:00+0000\n"
+"PO-Revision-Date: 2024-01-01 12:00+0000\n"
+"Last-Translator: \n"
+"Language-Team: English (US)\n"
+"Language: en_US\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Service Feedback"
+msgstr "Service Feedback"
+
+msgid "Feedback"
+msgstr "Feedback"
+
+msgid "Feedbacks"
+msgstr "Feedbacks"
+
+msgid "Configuration"
+msgstr "Configuration"
+
+msgid "Reports"
+msgstr "Reports"
+
+msgid "Email Configuration"
+msgstr "Email Configuration"
+
+msgid "Enable Feedback"
+msgstr "Enable Feedback"
+
+msgid "Email Subject"
+msgstr "Email Subject"
+
+msgid "Email Body"
+msgstr "Email Body"
+
+msgid "Available variables: {ticket_id}, {requester_name}"
+msgstr "Available variables: {ticket_id}, {requester_name}"
+
+msgid "Available variables: {ticket_id}, {requester_name}, {rating_stars}"
+msgstr "Available variables: {ticket_id}, {requester_name}, {rating_stars}"
+
+msgid "User"
+msgstr "User"
+
+msgid "Rating"
+msgstr "Rating"
+
+msgid "Status"
+msgstr "Status"
+
+msgid "Date creation"
+msgstr "Date creation"
+
+msgid "Date completion"
+msgstr "Date completion"
+
+msgid "No feedback found"
+msgstr "No feedback found"
+
+msgid "Pending"
+msgstr "Pending"
+
+msgid "Completed"
+msgstr "Completed"
+
+msgid "General Statistics"
+msgstr "General Statistics"
+
+msgid "Total Feedbacks"
+msgstr "Total Feedbacks"
+
+msgid "Response Rate"
+msgstr "Response Rate"
+
+msgid "Average Rating"
+msgstr "Average Rating"
+
+msgid "Report by Technician"
+msgstr "Report by Technician"
+
+msgid "Report by Group"
+msgstr "Report by Group"
+
+msgid "Report by Category"
+msgstr "Report by Category"
+
+msgid "Technician"
+msgstr "Technician"
+
+msgid "Group"
+msgstr "Group"
+
+msgid "Category"
+msgstr "Category"
+
+msgid "Filters"
+msgstr "Filters"
+
+msgid "Start date"
+msgstr "Start date"
+
+msgid "End date"
+msgstr "End date"
+
+msgid "Entity"
+msgstr "Entity"
+
+msgid "Apply"
+msgstr "Apply"
+
+msgid "Invalid parameters"
+msgstr "Invalid parameters"
+
+msgid "Thank you for your feedback!"
+msgstr "Thank you for your feedback!"
+
+msgid "Your rating has been recorded successfully."
+msgstr "Your rating has been recorded successfully."
+
+msgid "Your rating:"
+msgstr "Your rating:"
+
+msgid "Error processing feedback"
+msgstr "Error processing feedback"
+
+msgid "This feedback link may have already been used or is invalid."
+msgstr "This feedback link may have already been used or is invalid."
+
+msgid "You can now close this window."
+msgstr "You can now close this window."
+
+msgid "Configuration updated successfully"
+msgstr "Configuration updated successfully"
+
+msgid "Service Feedback Reports"
+msgstr "Service Feedback Reports"
+
+msgid "Service Feedback Configuration"
+msgstr "Service Feedback Configuration"

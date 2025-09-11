@@ -1,0 +1,74 @@
+/**
+ * Plugin ServiceFeedback
+ * CSS Styles
+ */
+
+.servicefeedback-stars {
+    font-size: 24px;
+    color: #ffd700;
+    margin: 0 2px;
+}
+
+.servicefeedback-stars.empty {
+    color: #ccc;
+}
+
+.servicefeedback-rating-container {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.servicefeedback-rating-container a {
+    text-decoration: none;
+    margin: 0 5px;
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.servicefeedback-rating-container a:hover {
+    transform: scale(1.2);
+}
+
+.servicefeedback-success {
+    background-color: #d4edda;
+    border: 1px solid #c3e6cb;
+    color: #155724;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.servicefeedback-error {
+    background-color: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.servicefeedback-stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.servicefeedback-stat-item {
+    text-align: center;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    min-width: 150px;
+}
+
+.servicefeedback-stat-number {
+    font-size: 2em;
+    font-weight: bold;
+    color: #007bff;
+}
+
+.servicefeedback-stat-label {
+    font-size: 0.9em;
+    color: #6c757d;
+    margin-top: 5px;
+}
