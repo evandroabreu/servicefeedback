@@ -49,7 +49,7 @@ function plugin_servicefeedback_install()
 
 Seu chamado #{ticket_id} foi finalizado com sucesso.<br><br>
 
-Para nos ajudar a melhorar nossos serviços, por favor avalie nosso atendimento clicando na quantidade de estrelas que representam seu nível de satisfação.
+Para nos ajudar a melhorar nossos serviços, por favor avalie nosso atendimento clicando no botão abaixo.
 
 {rating_stars}
 
