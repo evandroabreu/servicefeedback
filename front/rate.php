@@ -1,66 +1,73 @@
 <?php
-/**
- * Plugin ServiceFeedback
- * Rating endpoint
- */
-
 include('../../../inc/includes.php');
 
-// Verificar parâmetros
-if (!isset($_GET['token']) || !isset($_GET['rating'])) {
+$token = $_REQUEST['token'] ?? null;
+if (!$token) {
     Html::displayErrorAndDie(__('Invalid parameters', 'servicefeedback'));
 }
 
-$token = $_GET['token'];
-$rating = intval($_GET['rating']);
+// Submissão do formulário (POST)
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    
+    $rating   = intval($_POST['rating']);
+    $comment  = trim($_POST['comment'] ?? '');
 
-// Processar avaliação
-$success = PluginServicefeedbackFeedback::processRating($token, $rating);
+    $success = PluginServicefeedbackFeedback::processRating($token, $rating, $comment);
 
-// Página de resposta
-Html::header(__('Service Feedback', 'servicefeedback'), $_SERVER['PHP_SELF']);
-
-echo "<div class='center'>";
-echo "<div style='margin: 50px auto; max-width: 600px; padding: 30px; border: 1px solid #ddd; border-radius: 10px; background: #f9f9f9;'>";
-
-if ($success) {
-    echo "<h2 style='color: #28a745; text-align: center;'>";
-    echo "<i class='fas fa-check-circle' style='font-size: 48px; margin-bottom: 20px;'></i><br>";
-    echo __('Obrigado pelo seu feedback!', 'servicefeedback');
-    echo "</h2>";
-   
-    echo "<p style='text-align: center; font-size: 18px; margin: 20px 0;'>";
-    echo __('Seu nível de satisfação foi registrado com sucesso!', 'servicefeedback');
-    echo "</p>";
-   
-    echo "<div style='text-align: center; margin: 20px 0;'>";
-    echo "<span style='font-size: 24px;'>" . __('Seu nível de satisfação:', 'servicefeedback') . " </span>";
-    for ($i = 1; $i <= 5; $i++) {
-        if ($i <= $rating) {
-            echo "<span style='color: #ffd700; font-size: 30px;'>★</span>";
-        } else {
-            echo "<span style='color: #ccc; font-size: 30px;'>★</span>";
+    Html::header(__('Service Feedback', 'servicefeedback'), $_SERVER['PHP_SELF']);
+    echo "<div class='center'>";
+    echo "<div style='margin: 50px auto; max-width: 600px; padding: 30px; border: 1px solid #ddd; border-radius: 10px; background: #f9f9f9;'>";
+    if ($success) {
+        echo "<h2 style='color: #28a745; text-align: center;'>";
+        echo "<i class='fas fa-check-circle' style='font-size: 48px; margin-bottom: 20px;'></i><br>";
+        echo __('Obrigado pelo seu feedback!', 'servicefeedback');
+        echo "</h2>";
+        echo "<p style='text-align: center; font-size: 18px; margin: 20px 0;'>Seu nível de satisfação foi registrado com sucesso!</p>";
+        echo "<div style='text-align: center; font-size:20px;'>";
+        for ($i = 1; $i <= 5; $i++) {
+            echo $i <= $rating ? "<span style='color:#ffd700;font-size:30px;'>★</span>" : "<span style='color:#ccc;font-size:30px;'>★</span>";
         }
+        echo " ($rating/5)";
+        echo "</div>";
+        if ($comment) {
+            echo "<p style='margin-top:20px;'><b>Comentário:</b> ".Html::entities_deep($comment)."</p>";
+        }
+        echo "<p style='margin-top:20px; text-align:center;'>Agora você pode fechar esta janela.</p>";
+    } else {
+        echo "<h2 style='color: #dc3545; text-align: center;'>Erro ao salvar feedback</h2>";
     }
-    echo " ($rating/5)";
-    echo "</div>";
-
-} else {
-    echo "<h2 style='color: #dc3545; text-align: center;'>";
-    echo "<i class='fas fa-exclamation-triangle' style='font-size: 48px; margin-bottom: 20px;'></i><br>";
-    echo __('Erro ao processar feedback', 'servicefeedback');
-    echo "</h2>";
-   
-    echo "<p style='text-align: center; font-size: 18px; margin: 20px 0;'>";
-    echo __('Este link de feedback pode já ter sido usado ou é inválido.', 'servicefeedback');
-    echo "</p>";
+    echo "</div></div>";
+    Html::footer();
+    exit;
 }
 
-echo "<p style='text-align: center; margin-top: 30px;'>";
-echo __('Agora você pode fechar esta janela.', 'servicefeedback');
-echo "</p>";
+// Se for acesso GET com token → mostra formulário
+Html::header(__('Service Feedback', 'servicefeedback'), $_SERVER['PHP_SELF']);
+?>
+<div class='center'>
+   <form method="post" style="max-width:600px;margin:30px auto; padding:20px; border:1px solid #ddd; border-radius:10px; background:#f9f9f9;">
+      <input type="hidden" name="token" value="<?php echo Html::entities_deep($token); ?>">
+      <h2><?php echo __('Avalie nosso atendimento', 'servicefeedback'); ?></h2>
 
-echo "</div>";
-echo "</div>";
+      <div style="margin:20px 0; text-align:center;">
+         <?php for ($i=1;$i<=5;$i++): ?>
+           <label style="margin:0 5px;">
+             <input type="radio" name="rating" value="<?php echo $i; ?>" required>
+             <span style="font-size:30px;color:#ffd700;cursor:pointer;">★</span>
+           </label>
+         <?php endfor; ?>
+      </div>
 
+      <div style="margin:20px 0;">
+         <label>Comentário (opcional):</label><br>
+         <textarea name="comment" rows="4" style="width:100%;resize:vertical;"></textarea>
+      </div>
+
+      <div>
+         <button type="submit" class="submit">Enviar</button>
+      </div>
+      <?php Html::closeForm(); ?>
+   </form>
+</div>
+<?php
 Html::footer();

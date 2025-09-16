@@ -38,6 +38,20 @@ function plugin_init_servicefeedback()
 
     // CSS
     $PLUGIN_HOOKS['add_css']['servicefeedback'] = 'css/servicefeedback.css';
+
+    // $PLUGIN_HOOKS['perms']['servicefeedback'] = [
+    //     'plugin_servicefeedback' => [
+    //         'rights' => [READ, UPDATE, DELETE],
+    //         'short'  => __('Service Feedback', 'servicefeedback'),
+    //         'long'   => [
+    //                     READ   => __('View feedback reports', 'servicefeedback'),
+    //                     UPDATE => __('Change feedback configuration', 'servicefeedback'),
+    //                     DELETE => __('Delete feedback entries', 'servicefeedback')
+    //         ]
+    //     ]
+    // ];
+
+    Plugin::registerClass('PluginServicefeedbackProfile', ['addtabon' => 'Profile']);
 }
 
 /**
@@ -48,8 +62,8 @@ function plugin_version_servicefeedback()
     return [
        'name'           => 'Service Feedback',
        'version'        => PLUGIN_SERVICEFEEDBACK_VERSION,
-       'author'         => 'TRE-PI',
-       'license'        => 'GPLv2+',
+       'author'         => 'Evandro Abreu',
+       'license'        => 'GPLv3+',
        'homepage'       => '',
        'requirements'   => [
           'glpi' => [

@@ -29,7 +29,7 @@ MySQL/MariaDB
 
 Instalação
 
-Extraia o plugin no diretório plugins/servicefeedback/ do GLPI
+Extraia o plugin no diretório plugins/ do GLPI
 
 Acesse a interface web do GLPI como administrador
 
@@ -39,19 +39,6 @@ Localize o plugin "Service Feedback" e clique em Instalar
 
 Após a instalação, clique em Ativar
 
-Configuração
-
-Acesse Ferramentas > Service Feedback > Configuração
-
-Configure as opções:
-
-Habilitar Avaliação: Ativa/desativa o envio de emails
-
-Assunto do Email: Personalize o assunto (variáveis disponíveis: {ticket_id}, {requester_name})
-
-Corpo do Email: Personalize o conteúdo (variáveis disponíveis: {ticket_id}, {requester_name}, {rating_stars})
-
-Como Funciona
 Fluxo de Funcionamento
 
 Fechamento do Chamado: Quando um chamado muda para status "Fechado"
@@ -64,31 +51,11 @@ Registro Pendente: Um registro "pendente" é criado na tabela de avaliações
 
 Envio do Email: Email com estrelas clicáveis é enviado para o solicitante
 
-Avaliação: Usuário clica em uma estrela no email
+Avaliação: Usuário clica, no próprio cliente de email, na quantidade de estrelas que representa seu nível de satisfação
 
 Processamento: Token é marcado como usado e avaliação é salva
 
 Visualização: Dados ficam disponíveis na aba "Feedback" do chamado
-
-Estrutura de Arquivos
-servicefeedback/
-├── setup.php                 # Configuração principal do plugin
-├── hook.php                  # Hooks de instalação/desinstalação
-├── inc/
-│   ├── feedback.class.php    # Classe principal de feedback
-│   ├── menu.class.php        # Menu do plugin
-│   ├── config.class.php      # Configurações
-│   └── report.class.php      # Relatórios
-├── front/
-│   ├── rate.php             # Endpoint para processar avaliações
-│   ├── report.php           # Página de relatórios
-│   └── config.php           # Página de configuração
-├── css/
-│   └── servicefeedback.css  # Estilos CSS
-├── locales/
-│   ├── pt_BR.po            # Tradução português
-│   └── en_US.po            # Tradução inglês
-└── README.md               # Este arquivo
 
 Relatórios
 

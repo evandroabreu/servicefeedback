@@ -1,4 +1,5 @@
 <?php
+// include('../../../inc/based_config.php');
 /**
  * Plugin ServiceFeedback
  * Feedback class
@@ -114,7 +115,7 @@ class PluginServicefeedbackFeedback extends CommonDBTM
            '{requester_name}' => $user->fields['realname'] ?: $user->fields['name'],
            '{requester_firstname}' => $user->fields['firstname'] ?? '',
            '{requester_lastname}'  => $user->fields['realname'] ?? ($user->fields['name'] ?? ''),
-           '{rating_stars}' => self::generateRatingStars($feedback->fields['token'])
+           '{rating_stars}' => self::generateRatingLink($feedback->fields['token'])
         ];
 
         // Substituir variáveis no assunto e corpo
@@ -161,14 +162,27 @@ class PluginServicefeedbackFeedback extends CommonDBTM
         return $html;
     }
 
+    public static function generateRatingLink($token)
+    {
+        global $CFG_GLPI;
+
+        // Monta URL absoluta
+        $url_base = $CFG_GLPI['url_base'] . "/plugins/servicefeedback/front/rate.php";
+
+        return '<p><a href="'.$url_base.'?token='.$token.'" 
+                style="display:inline-block;padding:10px 20px;background:#007bff;color:#fff;
+                       text-decoration:none;border-radius:5px;">'
+               .__('Avaliar atendimento', 'servicefeedback').'</a></p>';
+    }
+
     /**
-     * Processa a avaliação
-     */
-    public static function processRating($token, $rating)
+    * Processa a avaliação (nota + comentário)
+    */
+    public static function processRating($token, $rating, $comment = null)
     {
         global $DB;
 
-        self::writeLog("Processando avaliação - Token: $token, Rating: $rating");
+        self::writeLog("Processando avaliação - Token: $token, Rating: $rating, Comentário: $comment");
 
         // Validar rating
         if (!in_array($rating, [1, 2, 3, 4, 5])) {
@@ -188,22 +202,56 @@ class PluginServicefeedbackFeedback extends CommonDBTM
 
         $feedback_data = $DB->fetchAssoc($result);
 
-        // Atualizar feedback
+        // Atualizar feedback na tabela do plugin
         $feedback = new self();
         $input = [
-           'id' => $feedback_data['id'],
-           'rating' => $rating,
-           'status' => 'completed',
-           'date_completion' => date('Y-m-d H:i:s')
+           'id'              => $feedback_data['id'],
+           'rating'          => $rating,
+           'status'          => 'completed',
+           'date_completion' => date('Y-m-d H:i:s'),
+           'comment'         => $comment
         ];
 
-        if ($feedback->update($input)) {
-            self::writeLog("Avaliação salva com sucesso - ID: " . $feedback_data['id']);
-            return true;
+        $ok_plugin = $feedback->update($input);
+
+        // ==================================================================
+        // Também gravar na tabela oficial do GLPI: glpi_ticketsatisfactions
+        // ==================================================================
+        $tickets_id = (int)$feedback_data['tickets_id'];
+        $now        = date('Y-m-d H:i:s');
+
+        $check = $DB->query("SELECT id FROM glpi_ticketsatisfactions 
+                           WHERE tickets_id = $tickets_id");
+        if ($DB->numrows($check) > 0) {
+            $row = $DB->fetchAssoc($check);
+            $DB->updateOrDie(
+                'glpi_ticketsatisfactions',
+                [
+                  'satisfaction'   => $rating,
+                  'date_answered'  => $now,
+                  'comment'        => $comment
+            ],
+                ['id' => $row['id']],
+                "Falha ao atualizar glpi_ticketsatisfactions"
+            );
+            self::writeLog("Atualizada satisfação em glpi_ticketsatisfactions para chamado $tickets_id");
         } else {
-            self::writeLog("Erro ao salvar avaliação - ID: " . $feedback_data['id']);
-            return false;
+            $DB->insertOrDie(
+                'glpi_ticketsatisfactions',
+                [
+                  'tickets_id'     => $tickets_id,
+                  'type'           => 1,
+                  'date_begin'     => $now,
+                  'date_answered'  => $now,
+                  'satisfaction'   => $rating,
+                  'comment'        => $comment
+            ],
+                "Falha ao inserir em glpi_ticketsatisfactions"
+            );
+            self::writeLog("Inserida satisfação em glpi_ticketsatisfactions para chamado $tickets_id");
         }
+
+        return $ok_plugin;
     }
 
     /**
@@ -293,9 +341,17 @@ class PluginServicefeedbackFeedback extends CommonDBTM
      */
     public static function writeLog($message)
     {
-        $log_file = GLPI_LOG_DIR . '/servicefeedback/feedback.log';
+        $log_dir = GLPI_LOG_DIR . '/servicefeedback';
+        if (!is_dir($log_dir)) {
+            mkdir($log_dir, 0777, true);
+        }
+
+        $log_file = $log_dir . '/feedback.log';
+
         $timestamp = date('Y-m-d H:i:s');
         $log_message = "[$timestamp] $message" . PHP_EOL;
+
         file_put_contents($log_file, $log_message, FILE_APPEND | LOCK_EX);
     }
+
 }
