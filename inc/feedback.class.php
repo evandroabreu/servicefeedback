@@ -4,11 +4,20 @@
  * Plugin ServiceFeedback
  * Feedback class
  */
+use Toolbox;
 
 class PluginServicefeedbackFeedback extends CommonDBTM
 {
 
     public static $rightname = 'plugin_servicefeedback';
+
+    public static function logInfo($message)
+    {
+        Toolbox::logInFile(
+            'servicefeedback',   // nome do arquivo em _log/
+            "[INFO] " . $message
+        );
+    }
 
     public static function getTypeName($nb = 0)
     {
@@ -22,12 +31,15 @@ class PluginServicefeedbackFeedback extends CommonDBTM
     {
         global $DB;
 
-        self::writeLog("Processando fechamento do chamado ID: $tickets_id");
+        // self::writeLog("Processando fechamento do chamado ID: $tickets_id");
+        PluginServicefeedbackFeedback::logInfo("Processando fechamento do chamado ID: $tickets_id");
 
         // Buscar informações do chamado
         $ticket = new Ticket();
         if (!$ticket->getFromDB($tickets_id)) {
-            self::writeLog("Erro: Chamado $tickets_id não encontrado");
+            // self::writeLog("Erro: Chamado $tickets_id não encontrado");
+            PluginServicefeedbackFeedback::logInfo("Erro: Chamado $tickets_id não encontrado");
+
             return false;
         }
 
@@ -37,14 +49,17 @@ class PluginServicefeedbackFeedback extends CommonDBTM
         $result = $DB->query($query);
       
         if ($DB->numrows($result) > 0) {
-            self::writeLog("Feedback já existe para o chamado $tickets_id");
+            // self::writeLog("Feedback já existe para o chamado $tickets_id");
+            PluginServicefeedbackFeedback::logInfo("Feedback já existe para o chamado $tickets_id");
+
             return false;
         }
 
         // Buscar o usuário solicitante
         $users_id = $ticket->fields['users_id_recipient'];
         if (empty($users_id)) {
-            self::writeLog("Erro: Usuário solicitante não encontrado para o chamado $tickets_id");
+            // self::writeLog("Erro: Usuário solicitante não encontrado para o chamado $tickets_id");
+            PluginServicefeedbackFeedback::logInfo("Erro: Usuário solicitante não encontrado para o chamado $tickets_id");
             return false;
         }
 
@@ -65,13 +80,15 @@ class PluginServicefeedbackFeedback extends CommonDBTM
         $feedback_id = $feedback->add($input);
       
         if ($feedback_id) {
-            self::writeLog("Feedback criado com ID: $feedback_id para chamado $tickets_id");
+            // self::writeLog("Feedback criado com ID: $feedback_id para chamado $tickets_id");
+            PluginServicefeedbackFeedback::logInfo("Feedback criado com ID: $feedback_id para chamado $tickets_id");
          
             // Enviar email
             self::sendFeedbackEmail($feedback_id);
             return true;
         } else {
-            self::writeLog("Erro ao criar feedback para chamado $tickets_id");
+            // self::writeLog("Erro ao criar feedback para chamado $tickets_id");
+            PluginServicefeedbackFeedback::logInfo("Erro ao criar feedback para chamado $tickets_id");
             return false;
         }
     }
@@ -93,7 +110,8 @@ class PluginServicefeedbackFeedback extends CommonDBTM
 
         $feedback = new self();
         if (!$feedback->getFromDB($feedback_id)) {
-            self::writeLog("Erro: Feedback $feedback_id não encontrado");
+            // self::writeLog("Erro: Feedback $feedback_id não encontrado");
+            PluginServicefeedbackFeedback::logInfo("Erro: Feedback $feedback_id não encontrado");
             return false;
         }
 
@@ -130,10 +148,12 @@ class PluginServicefeedbackFeedback extends CommonDBTM
         $mail->isHTML(true);
 
         if ($mail->Send()) {
-            self::writeLog("Email de feedback enviado para: " . $user->getDefaultEmail());
+            // self::writeLog("Email de feedback enviado para: " . $user->getDefaultEmail());
+            PluginServicefeedbackFeedback::logInfo("Email de feedback enviado para: " . $user->getDefaultEmail());
             return true;
         } else {
-            self::writeLog("Erro ao enviar email de feedback: " . $mail->ErrorInfo);
+            // self::writeLog("Erro ao enviar email de feedback: " . $mail->ErrorInfo);
+            PluginServicefeedbackFeedback::logInfo("Erro ao enviar email de feedback: " . $mail->ErrorInfo);
             return false;
         }
     }
@@ -182,11 +202,13 @@ class PluginServicefeedbackFeedback extends CommonDBTM
     {
         global $DB;
 
-        self::writeLog("Processando avaliação - Token: $token, Rating: $rating, Comentário: $comment");
+        // self::writeLog("Processando avaliação - Token: $token, Rating: $rating, Comentário: $comment");
+        PluginServicefeedbackFeedback::logInfo("Processando avaliação - Token: $token, Rating: $rating, Comentário: $comment");
 
         // Validar rating
         if (!in_array($rating, [1, 2, 3, 4, 5])) {
-            self::writeLog("Erro: Rating inválido: $rating");
+            // self::writeLog("Erro: Rating inválido: $rating");
+            PluginServicefeedbackFeedback::logInfo("Erro: Rating inválido: $rating");
             return false;
         }
 
@@ -196,7 +218,8 @@ class PluginServicefeedbackFeedback extends CommonDBTM
         $result = $DB->query($query);
 
         if ($DB->numrows($result) == 0) {
-            self::writeLog("Erro: Token não encontrado ou já utilizado: $token");
+            // self::writeLog("Erro: Token não encontrado ou já utilizado: $token");
+            PluginServicefeedbackFeedback::logInfo("Erro: Token não encontrado ou já utilizado: $token");
             return false;
         }
 
@@ -234,7 +257,8 @@ class PluginServicefeedbackFeedback extends CommonDBTM
                 ['id' => $row['id']],
                 "Falha ao atualizar glpi_ticketsatisfactions"
             );
-            self::writeLog("Atualizada satisfação em glpi_ticketsatisfactions para chamado $tickets_id");
+            // self::writeLog("Atualizada satisfação em glpi_ticketsatisfactions para chamado $tickets_id");
+            PluginServicefeedbackFeedback::logInfo("Atualizada satisfação em glpi_ticketsatisfactions para chamado $tickets_id");
         } else {
             $DB->insertOrDie(
                 'glpi_ticketsatisfactions',
@@ -248,7 +272,8 @@ class PluginServicefeedbackFeedback extends CommonDBTM
             ],
                 "Falha ao inserir em glpi_ticketsatisfactions"
             );
-            self::writeLog("Inserida satisfação em glpi_ticketsatisfactions para chamado $tickets_id");
+            // self::writeLog("Inserida satisfação em glpi_ticketsatisfactions para chamado $tickets_id");
+            PluginServicefeedbackFeedback::logInfo("Inserida satisfação em glpi_ticketsatisfactions para chamado $tickets_id");
         }
 
         return $ok_plugin;
