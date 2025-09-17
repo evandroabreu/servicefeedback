@@ -7,17 +7,9 @@ Funcionalidades
 
 Envio automático de emails: Quando um chamado é fechado, um email é enviado automaticamente para o solicitante
 
-Avaliação por estrelas: Sistema de avaliação de 1 a 5 estrelas diretamente no email
+Avaliação por estrelas: Sistema de avaliação de 1 a 5 estrelas com campo opcional para comentários
 
 Tokens únicos: Cada email possui um token único para evitar avaliações duplicadas
-
-Aba no chamado: Visualização das avaliações recebidas diretamente na aba "Feedback" do chamado
-
-Relatórios completos: Relatórios agregados por técnico, grupo, categoria, entidade e período
-
-Configuração flexível: Personalização do assunto e corpo do email
-
-Logs detalhados: Sistema de logs para depuração e monitoramento
 
 Compatibilidade
 
@@ -59,43 +51,8 @@ Visualização: Dados ficam disponíveis na aba "Feedback" do chamado
 
 Relatórios
 
-O plugin oferece relatórios detalhados acessíveis em Ferramentas > Service Feedback > Relatórios:
-
-Estatísticas Gerais
-
-Total de feedbacks enviados
-
-Total de feedbacks respondidos
-
-Taxa de resposta
-
-Avaliação média geral
-
-Relatórios Específicos
-
-Por Técnico: Performance individual dos técnicos
-
-Por Grupo: Performance dos grupos de atendimento
-
-Por Categoria: Avaliação por categoria de chamado
-
-Por Entidade: Dados segmentados por entidade
-
-Por Período: Filtros de data personalizáveis
-
-Logs
-
-Os logs são armazenados em files/_log/servicefeedback/feedback.log e incluem:
-
-Processamento de fechamento de chamados
-
-Criação de tokens
-
-Envio de emails
-
-Processamento de avaliações
-
-Erros e exceções
+O plugin é integrado ao plugin Dashboard(https://github.com/serviceticst/glpi-plugin-dashboard/releases) o que permite utilizar
+todos os relatórios fornecidos por este.
 
 Personalização
 Template de Email
@@ -164,12 +121,6 @@ Validação de parâmetros
 
 Proteção contra CSRF
 
-Logs de auditoria
-
-Suporte
-
-Para suporte e relatório de bugs, consulte a documentação do GLPI ou entre em contato com o administrador do sistema.
-
 Licença
 
 Este plugin é distribuído sob a licença GPLv2+.
@@ -182,9 +133,3 @@ Versão inicial
 Envio automático de emails de feedback
 
 Sistema de avaliação por estrelas
-
-Relatórios completos
-
-Interface de configuração
-
-Suporte a múltiplos idiomas
