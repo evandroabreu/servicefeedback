@@ -214,7 +214,7 @@ class PluginServicefeedbackFeedback extends CommonDBTM
 
         // Buscar feedback pelo token
         $query = "SELECT * FROM glpi_plugin_servicefeedback_feedbacks 
-                WHERE token = '" . $DB->escape($token) . "' AND status = 'pending'";
+                WHERE token = '" . $DB->escape($token) . "'"; // . "' AND status = 'pending'";
         $result = $DB->query($query);
 
         if ($DB->numrows($result) == 0) {
