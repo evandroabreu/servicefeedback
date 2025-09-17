@@ -62,7 +62,7 @@ function plugin_version_servicefeedback()
     return [
        'name'           => 'Service Feedback',
        'version'        => PLUGIN_SERVICEFEEDBACK_VERSION,
-       'author'         => 'Evandro Abreu',
+       'author'         => '<a href="mailto:evandro.abreu@gmail.com">Evandro Abreu</b></a>',
        'license'        => 'GPLv3+',
        'homepage'       => '',
        'requirements'   => [

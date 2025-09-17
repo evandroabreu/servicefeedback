@@ -55,7 +55,7 @@ Para nos ajudar a melhorar nossos serviços, por favor avalie nosso atendimento 
 
 Obrigado pela sua colaboração!
 
-Equipe de Suporte',
+Equipe COSUT',
        'enable_feedback' => '1'
     ];
 
