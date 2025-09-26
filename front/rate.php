@@ -4,7 +4,7 @@ include('../../../inc/includes.php');
 
 $token = $_REQUEST['token'] ?? null;
 // echo "<pre>TOKEN DEBUG: " . htmlspecialchars($token) . "</pre>";
-error_log("ServiceFeedback DEBUG: TOKEN = $token");
+// error_log("ServiceFeedback DEBUG: TOKEN = $token");
 if (!$token) {
     Html::displayErrorAndDie(__('Invalid parameters', 'servicefeedback'));
 }
@@ -85,11 +85,11 @@ Html::header(__('Service Feedback', 'servicefeedback'), $_SERVER['PHP_SELF']);
 
       
       <div class="rating">
-  <?php for ($i = 5; $i >= 1; $i--): ?>
-     <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required>
-     <label for="star<?php echo $i; ?>">★</label>
-  <?php endfor; ?>
-</div>
+        <?php for ($i = 5; $i >= 1; $i--): ?>
+            <input type="radio" id="star<?php echo $i; ?>" name="rating" value="<?php echo $i; ?>" required>
+            <label for="star<?php echo $i; ?>">★</label>
+        <?php endfor; ?>
+      </div>
       <div style="margin:20px 0;">
          <label>Comentário (opcional):</label><br>
          <textarea name="comment" rows="4" style="width:100%;resize:vertical;"></textarea>

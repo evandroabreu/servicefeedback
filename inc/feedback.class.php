@@ -4,7 +4,7 @@
  * Plugin ServiceFeedback
  * Feedback class
  */
-use Toolbox;
+// use Toolbox;
 
 class PluginServicefeedbackFeedback extends CommonDBTM
 {
@@ -143,6 +143,8 @@ class PluginServicefeedbackFeedback extends CommonDBTM
         // Configurar email
         $mail = new GLPIMailer();
         $mail->AddAddress($user->getDefaultEmail());
+        $mail->SetFrom($CFG_GLPI['admin_email'], "Central de Serviços de TI do TRE-PI");
+        // $mail->SetFrom("glpi@tre-pi.jus.br", "Central de Serviços de TI do TRE-PI");
         $mail->Subject = $subject;
         $mail->Body = $body;
         $mail->isHTML(true);
