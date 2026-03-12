@@ -1,6 +1,8 @@
 <?php
-include('../../../inc/includes.php');
+// Formulário público: não exige autenticação GLPI
+$SECURITY_STRATEGY = 'no_check';
 
+include('../../../inc/includes.php');
 
 $token = $_REQUEST['token'] ?? null;
 // echo "<pre>TOKEN DEBUG: " . htmlspecialchars($token) . "</pre>";
@@ -17,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $success = PluginServicefeedbackFeedback::processRating($token, $rating, $comment);
 
-    Html::header(__('Service Feedback', 'servicefeedback'), $_SERVER['PHP_SELF']);
+    Html::nullHeader(__('Service Feedback', 'servicefeedback'), $_SERVER['PHP_SELF']);
     echo "<div class='center'>";
     echo "<div style='margin: 50px auto; max-width: 600px; padding: 30px; border: 1px solid #ddd; border-radius: 10px; background: #f9f9f9;'>";
     if ($success) {
@@ -40,12 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "<h2 style='color: #dc3545; text-align: center;'>Erro ao salvar feedback</h2>";
     }
     echo "</div></div>";
-    Html::footer();
+    Html::nullFooter();
     exit;
 }
 
 // Se for acesso GET com token → mostra formulário
-Html::header(__('Service Feedback', 'servicefeedback'), $_SERVER['PHP_SELF']);
+Html::nullHeader(__('Service Feedback', 'servicefeedback'), $_SERVER['PHP_SELF']);
 
 ?>
 
@@ -102,4 +104,4 @@ Html::header(__('Service Feedback', 'servicefeedback'), $_SERVER['PHP_SELF']);
    </form>
 </div>
 <?php
-Html::footer();
+Html::nullFooter();

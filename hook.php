@@ -18,6 +18,7 @@ function plugin_servicefeedback_install()
       `users_id` int(11) NOT NULL,
       `token` varchar(255) NOT NULL,
       `rating` int(1) DEFAULT NULL,
+      `comment` text DEFAULT NULL,
       `status` enum('pending','completed') DEFAULT 'pending',
       `date_creation` datetime DEFAULT NULL,
       `date_completion` datetime DEFAULT NULL,
@@ -63,6 +64,17 @@ Equipe COSUT',
         $query = "INSERT IGNORE INTO `glpi_plugin_servicefeedback_configs` 
                 (`name`, `value`) VALUES ('$name', '$value')";
         $DB->queryOrDie($query, $DB->error());
+    }
+
+    // Adicionar coluna comment caso a tabela já exista sem ela (migration)
+    if ($DB->tableExists('glpi_plugin_servicefeedback_feedbacks')) {
+        if (!$DB->fieldExists('glpi_plugin_servicefeedback_feedbacks', 'comment')) {
+            $DB->queryOrDie(
+                "ALTER TABLE `glpi_plugin_servicefeedback_feedbacks`
+                 ADD COLUMN `comment` text DEFAULT NULL AFTER `rating`",
+                $DB->error()
+            );
+        }
     }
 
     // Criar diretório de logs
