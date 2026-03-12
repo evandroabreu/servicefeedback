@@ -34,6 +34,13 @@ class PluginServicefeedbackFeedback extends CommonDBTM
         // self::writeLog("Processando fechamento do chamado ID: $tickets_id");
         PluginServicefeedbackFeedback::logInfo("Processando fechamento do chamado ID: $tickets_id");
 
+        // Verificar se o envio de feedback está habilitado na configuração
+        $config = self::getConfig();
+        if (empty($config['enable_feedback']) || $config['enable_feedback'] != '1') {
+            PluginServicefeedbackFeedback::logInfo("Feedback desabilitado na configuração. Chamado $tickets_id ignorado.");
+            return false;
+        }
+
         // Buscar informações do chamado
         $ticket = new Ticket();
         if (!$ticket->getFromDB($tickets_id)) {
@@ -214,9 +221,9 @@ class PluginServicefeedbackFeedback extends CommonDBTM
             return false;
         }
 
-        // Buscar feedback pelo token
-        $query = "SELECT * FROM glpi_plugin_servicefeedback_feedbacks 
-                WHERE token = '" . $DB->escape($token) . "'"; // . "' AND status = 'pending'";
+        // Buscar feedback pelo token (apenas pendentes — tokens já usados são rejeitados)
+        $query = "SELECT * FROM glpi_plugin_servicefeedback_feedbacks
+                WHERE token = '" . $DB->escape($token) . "' AND status = 'pending'";
         $result = $DB->query($query);
 
         if ($DB->numrows($result) == 0) {

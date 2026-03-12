@@ -127,7 +127,7 @@ class PluginServicefeedbackReport extends CommonGLPI
 
         $where = self::buildWhereClause();
 
-        $query = "SELECT 
+        $query = "SELECT
                   u.name as tech_name,
                   u.realname as tech_realname,
                   COUNT(f.id) as total_feedbacks,
@@ -135,7 +135,8 @@ class PluginServicefeedbackReport extends CommonGLPI
                   AVG(CASE WHEN f.rating IS NOT NULL THEN f.rating END) as avg_rating
                 FROM glpi_plugin_servicefeedback_feedbacks f
                 LEFT JOIN glpi_tickets t ON f.tickets_id = t.id
-                LEFT JOIN glpi_users u ON t.users_id_assign = u.id
+                LEFT JOIN glpi_tickets_users tu ON tu.tickets_id = t.id AND tu.type = 2
+                LEFT JOIN glpi_users u ON tu.users_id = u.id
                 WHERE $where AND u.id IS NOT NULL
                 GROUP BY u.id
                 ORDER BY avg_rating DESC, completed_feedbacks DESC";
@@ -187,14 +188,15 @@ class PluginServicefeedbackReport extends CommonGLPI
 
         $where = self::buildWhereClause();
 
-        $query = "SELECT 
+        $query = "SELECT
                   g.name as group_name,
                   COUNT(f.id) as total_feedbacks,
                   COUNT(CASE WHEN f.status = 'completed' THEN 1 END) as completed_feedbacks,
                   AVG(CASE WHEN f.rating IS NOT NULL THEN f.rating END) as avg_rating
                 FROM glpi_plugin_servicefeedback_feedbacks f
                 LEFT JOIN glpi_tickets t ON f.tickets_id = t.id
-                LEFT JOIN glpi_groups g ON t.groups_id_assign = g.id
+                LEFT JOIN glpi_tickets_groups tg ON tg.tickets_id = t.id AND tg.type = 2
+                LEFT JOIN glpi_groups g ON tg.groups_id = g.id
                 WHERE $where AND g.id IS NOT NULL
                 GROUP BY g.id
                 ORDER BY avg_rating DESC, completed_feedbacks DESC";
