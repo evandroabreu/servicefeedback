@@ -134,13 +134,19 @@ class PluginServicefeedbackFeedback extends CommonDBTM
         $config = self::getConfig();
 
         // Preparar variáveis do template
+        $close_date = '';
+        if (!empty($ticket->fields['closedate'])) {
+            $close_date = date('d/m/Y \à\s H:i', strtotime($ticket->fields['closedate']));
+        }
+
         $variables = [
-           '{ticket_id}' => $ticket->fields['id'],
-           '{ticket_title}' => $ticket->fields['name'],
-           '{requester_name}' => $user->fields['realname'] ?: $user->fields['name'],
+           '{ticket_id}'           => $ticket->fields['id'],
+           '{ticket_title}'        => $ticket->fields['name'],
+           '{requester_name}'      => $user->fields['realname'] ?: $user->fields['name'],
            '{requester_firstname}' => $user->fields['firstname'] ?? '',
            '{requester_lastname}'  => $user->fields['realname'] ?? ($user->fields['name'] ?? ''),
-           '{rating_stars}' => self::generateRatingLink($feedback->fields['token'])
+           '{close_date}'          => $close_date,
+           '{rating_stars}'        => self::generateRatingLink($feedback->fields['token'])
         ];
 
         // Substituir variáveis no assunto e corpo
@@ -201,7 +207,7 @@ class PluginServicefeedbackFeedback extends CommonDBTM
         return '<p><a href="'.$url_base.'?token='.$token.'" 
                 style="display:inline-block;padding:10px 20px;background:#007bff;color:#fff;
                        text-decoration:none;border-radius:5px;">'
-               .__('Avaliar atendimento', 'servicefeedback').'</a></p>';
+               .__('Responder pesquisa de satisfação', 'servicefeedback').'</a></p>';
     }
 
     /**

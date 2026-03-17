@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Plugin ServiceFeedback
  * Hook file
@@ -45,25 +46,39 @@ function plugin_servicefeedback_install()
 
     // Inserir configurações padrão
     $default_configs = [
-       'email_subject' => '[Chamado {ticket_id}] Avalie o atendimento do chamado {ticket_title}',
-       'email_body' => 'Olá {requester_firstname} {requester_lastname},<br><br>
+        'email_subject' => 'Pesquisa de satisfação do chamado nº {ticket_id}',
+        'email_body' => '<p>Prezado(a) Sr.(a) {requester_firstname} {requester_lastname},</p>
 
-Seu chamado #{ticket_id} foi finalizado com sucesso.<br><br>
+<p>Informamos que o seu chamado foi concluído. Seguem os detalhes para sua conferência:</p>
 
-Para nos ajudar a melhorar nossos serviços, por favor avalie nosso atendimento clicando no botão abaixo.
+<p>
+<strong>Número do chamado:</strong> {ticket_id}<br>
+<strong>Título:</strong> {ticket_title}<br>
+<strong>Data de fechamento:</strong> {close_date}
+</p>
+
+<p>Para nós, a sua opinião é muito importante. Convidamos você a avaliar o atendimento prestado por meio da pesquisa de satisfação disponível no botão abaixo:</p>
 
 {rating_stars}
 
-Obrigado pela sua colaboração!
+<p>Seu feedback contribui diretamente para a melhoria contínua dos nossos serviços.</p>
 
-Equipe COSUT',
-       'enable_feedback' => '1'
+<p>Em caso de dúvidas ou necessidade de reabertura do chamado, por favor, entre em contato com a Central de Serviços.</p>
+
+',
+        'enable_feedback' => '1'
     ];
 
     foreach ($default_configs as $name => $value) {
-        $query = "INSERT IGNORE INTO `glpi_plugin_servicefeedback_configs` 
+        $query = "INSERT IGNORE INTO `glpi_plugin_servicefeedback_configs`
                 (`name`, `value`) VALUES ('$name', '$value')";
         $DB->queryOrDie($query, $DB->error());
+    }
+
+    // Atualizar templates existentes com os novos valores
+    foreach (['email_subject', 'email_body'] as $name) {
+        $value = $DB->escape($default_configs[$name]);
+        $DB->query("UPDATE `glpi_plugin_servicefeedback_configs` SET `value` = '$value' WHERE `name` = '$name'");
     }
 
     // Adicionar coluna comment caso a tabela já exista sem ela (migration)
@@ -94,8 +109,8 @@ function plugin_servicefeedback_uninstall()
     global $DB;
 
     $tables = [
-       'glpi_plugin_servicefeedback_feedbacks',
-       'glpi_plugin_servicefeedback_configs'
+        'glpi_plugin_servicefeedback_feedbacks',
+        'glpi_plugin_servicefeedback_configs'
     ];
 
     foreach ($tables as $table) {

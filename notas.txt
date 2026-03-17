@@ -1,0 +1,13 @@
+para rollback quando quiser:                                                                                                                                
+                                                                                                                                                            
+  # Ver o estado anterior sem alterar nada (modo leitura)                                                                                                     
+  git checkout v1.0.0-pre-fixes                                                                                                                               
+   
+  # Voltar de fato para o estado anterior (descarta o commit de correções)                                                                                    
+  git reset --hard v1.0.0-pre-fixes                                                                                                                         
+                                                                                                                                                              
+  Para listar suas tags:                                                                                                                                      
+  git tag                                                                                                                                                     
+                                                                                                                                                              
+  Dica: se quiser também proteger o commit de correções com uma tag para poder navegar entre os dois estados sem perder nenhum, basta fazer git tag           
+  v1.0.1-fixes agora. Assim você alterna entre eles com git checkout <tag> sem risco de perder nada. 
