@@ -62,9 +62,6 @@ function plugin_servicefeedback_install()
 {rating_stars}
 
 <p>Seu feedback contribui diretamente para a melhoria contínua dos nossos serviços.</p>
-
-<p>Em caso de dúvidas ou necessidade de reabertura do chamado, por favor, entre em contato com a Central de Serviços.</p>
-
 ',
         'enable_feedback' => '1'
     ];
