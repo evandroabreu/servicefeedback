@@ -3,7 +3,7 @@ Descrição
 
 O plugin ServiceFeedback permite enviar automaticamente emails de avaliação para os solicitantes quando um chamado é fechado no GLPI. Os usuários podem avaliar o atendimento diretamente no email através de um sistema de 5 estrelas, sem necessidade de acessar páginas externas.
 
-Funcionalidades
+## Funcionalidades
 
 Envio automático de emails: Quando um chamado é fechado, um email é enviado automaticamente para o solicitante
 
@@ -51,7 +51,7 @@ Visualização: Dados ficam disponíveis na aba "Feedback" do chamado
 
 Relatórios
 
-O plugin é integrado ao plugin Dashboard(https://github.com/serviceticst/glpi-plugin-dashboard/releases) o que permite utilizar
+O plugin é integrado ao plugin Dashboard(<https://github.com/serviceticst/glpi-plugin-dashboard/releases>) o que permite utilizar
 todos os relatórios fornecidos por este.
 
 Personalização
